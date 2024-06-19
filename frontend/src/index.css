@@ -1,0 +1,90 @@
+html {
+  background-color: aliceblue;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  
+}
+
+li {
+  position: relative;
+  height: 200px;
+  width: 200px;
+  float: left;
+  border-style: solid;
+  border-radius: 30px;
+  margin: 0.5rem;
+  background-color: rgb(125, 187, 241);
+}
+  
+.listContainer {
+  align-items: center;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+    
+}
+
+.dayName {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%, -50%);
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+}
+
+.shortDate {
+  position: absolute;
+  left: 50%;
+  top: 22%;
+  transform: translate(-50%, -50%);
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+}
+
+.temperature {
+  width: 200px;
+  position: absolute;
+  left: 50%;
+  bottom: -10% ;
+  transform: translate(-50%, -50%);
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+}
+
+.weatherIcon {
+  margin-top: 10%;
+  height: 150px;
+  width: 150px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  text-align: left;
+  align-items: center;
+  flex-direction: column;
+  
+}
+
+.title h1 {
+  font-family: "Overpass";
+  font-size: 80px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+.dataFooter {
+  font-family: "Overpass";
+  font-size: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
