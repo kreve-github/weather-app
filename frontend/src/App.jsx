@@ -1,14 +1,30 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import weatherCode from './assets/weatherCode';
 import MyForm from './components/Form/Form';
 
 const URL = 'http://localhost:8000/';
 
-
 const App = () => {
-  const [coords, setCoords] = useState({latitude: 50.04, longitude: 19.94})
+  const [coords, setCoords] = useState({})
   const [data, setData] = useState([]);
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  function geoFindMe() {
+    function success(position) {
+      setCoords({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      })
+    }
+    function error() {
+      console.log("Unable to retrieve your location");
+    }  
+    if (!navigator.geolocation) {
+      console.log("Geolocation is not supported by your browser")
+    } else {
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
+  } 
 
   function getShortDate(date) {
     const day = date.getDate()
@@ -19,16 +35,23 @@ const App = () => {
 
     return `${day}.${month}.${year}`
   }
-  
+
   useEffect(() => {
+    geoFindMe()
+  }, [])
+
+  useEffect(() => {
+    if (coords.latitude) {
     fetch(URL + "?" + new URLSearchParams({
       latitude: coords.latitude,
       longitude: coords.longitude
     }).toString())
     .then(response => response.json())
     .then(data => setData(JSON.parse(data)))
+  }
   }, [coords])
 
+  
   let newData
 
   if (data[0]) {
@@ -58,7 +81,9 @@ const App = () => {
                 <img className='weatherIcon' alt='weatherIcon' src={weatherCode[parseInt(days.weather_code)]}/>
                 <span className='temperature'>{Math.floor(days.temperature_2m_max)}°C | {Math.floor(days.temperature_2m_min)}°C</span>
               </li>
-          )): ""}
+          )): 
+            <h2>Turn on geolocation or enter coordinates above to view Weather Forecast</h2>
+          }
         </ul>
       </section>
     </>
