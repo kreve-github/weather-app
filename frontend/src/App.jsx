@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import weatherCode from './assets/weatherCode';
-
+import MyForm from './components/Form/Form';
 
 const URL = 'http://localhost:8000/';
 
 
 const App = () => {
+  const [coords, setCoords] = useState({latitude: 50.04, longitude: 19.94})
   const [data, setData] = useState([]);
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
- 
+
   function getShortDate(date) {
     const day = date.getDate()
     let month = date.getMonth() + 1
@@ -18,14 +19,15 @@ const App = () => {
 
     return `${day}.${month}.${year}`
   }
-
+  
   useEffect(() => {
-    fetch(URL, {
-      method: "GET",
-    })
+    fetch(URL + "?" + new URLSearchParams({
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    }).toString())
     .then(response => response.json())
     .then(data => setData(JSON.parse(data)))
-  }, [])
+  }, [coords])
 
   let newData
 
@@ -40,24 +42,25 @@ const App = () => {
 
   return (
     <>
-      <div>
-        <section className='title'>
-          <h1>WEATHER FORECAST</h1>
-          <span className='dataFooter'>data from Open-Meteo</span>
-        </section>
-        <section className='listContainer'>
-          <ul>
-            {newData !== undefined ? newData.map((days, index) => (
-                <li key={index}>
-                  <span className='dayName'>{days.weekDay}</span>
-                  <span className='shortDate'>{days.shortDate}</span>
-                  <img className='weatherIcon' alt='weatherIcon' src={weatherCode[parseInt(days.weather_code)]}/>
-                  <span className='temperature'>{Math.floor(days.temperature_2m_max)}°C | {Math.floor(days.temperature_2m_min)}°C</span>
-                </li>
-            )): ""}
-          </ul>
-        </section>
-      </div>
+      <section className='title'>
+        <h1>WEATHER FORECAST</h1>
+        <span className='dataFooter'>data from Open-Meteo</span>
+      </section>
+      <section className='formContainer'>
+        <MyForm setCoords={ setCoords }/>
+      </section>
+      <section className='listContainer'>
+        <ul>
+          {newData !== undefined ? newData.map((days, index) => (
+              <li key={index}>
+                <span className='dayName'>{days.weekDay}</span>
+                <span className='shortDate'>{days.shortDate}</span>
+                <img className='weatherIcon' alt='weatherIcon' src={weatherCode[parseInt(days.weather_code)]}/>
+                <span className='temperature'>{Math.floor(days.temperature_2m_max)}°C | {Math.floor(days.temperature_2m_min)}°C</span>
+              </li>
+          )): ""}
+        </ul>
+      </section>
     </>
   )
 }

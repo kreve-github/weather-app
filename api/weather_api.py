@@ -49,7 +49,7 @@ def getData(latitude, longitude):
 
 
 @app.get("/")
-def index():
-    response = getData(50.04, 19.94) 
+def requestData(latitude, longitude):
+    response = getData(latitude, longitude) 
 
     return response.to_json(orient="records")
