@@ -2,7 +2,6 @@ form {
     margin-top: 15px;
     display: flex;
     justify-content: center;
-
 }
 
 input {
@@ -10,7 +9,6 @@ input {
     width: 200px;
     height: 40px;
     font-size: 20px;
-    
 }
 
 .searchButton {
