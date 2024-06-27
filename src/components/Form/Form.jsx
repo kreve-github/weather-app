@@ -12,10 +12,18 @@ function MyForm( {setCoords } ) {
   
     const handleSubmit = (event) => {
         event.preventDefault()
-        setCoords(()=> ({
+        if (parseFloat(inputs.latitude) || inputs.latitude < -90 || inputs.latitude > 90) {
+          alert("Latitude must be a number between -90 and 90")
+        }
+        else if (parseFloat(inputs.longitude) || inputs.longitude < -90 || inputs.longitude > 90) {
+          alert("Longitude must be a number between -90 and 90")
+        }
+        else {
+          setCoords(()=> ({
             latitude: inputs.latitude,
             longitude: inputs.longitude
         }))
+        }   
     }
 
     return (
