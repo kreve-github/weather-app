@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import weatherCode from './assets/weatherCode';
 import MyForm from './components/Form/Form';
 
-const URL = 'http://localhost:8000/';
+const URL = 'https://weather-app-api.azurewebsites.net/weather';
 
 const App = () => {
   const [coords, setCoords] = useState({})
