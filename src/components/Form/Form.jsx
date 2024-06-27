@@ -12,11 +12,11 @@ function MyForm( {setCoords } ) {
   
     const handleSubmit = (event) => {
         event.preventDefault()
-        if (parseFloat(inputs.latitude) || inputs.latitude < -90 || inputs.latitude > 90) {
+        if (!parseFloat(inputs.latitude) || inputs.latitude < -90 || inputs.latitude > 90) {
           alert("Latitude must be a number between -90 and 90")
         }
-        else if (parseFloat(inputs.longitude) || inputs.longitude < -90 || inputs.longitude > 90) {
-          alert("Longitude must be a number between -90 and 90")
+        else if (!parseFloat(inputs.longitude) || inputs.longitude < -180 || inputs.longitude > 180) {
+          alert("Longitude must be a number between -180 and 180")
         }
         else {
           setCoords(()=> ({
